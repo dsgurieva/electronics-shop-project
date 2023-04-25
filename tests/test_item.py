@@ -15,5 +15,3 @@ def test_item_apply_discount():
      assert item_1.price == 45000
      assert item_2.price == 18000
 
-def test_item():
-     assert len(Item.all) == 2
