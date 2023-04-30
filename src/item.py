@@ -6,6 +6,7 @@ class Item:
     pay_rate = 1.0
     all = []
 
+
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
         Создание экземпляра класса item.
@@ -17,23 +18,33 @@ class Item:
         self.price = price
         self.quantity = quantity
 
+
+    def __repr__(self):
+        """Возвращает название класса, имя, цену и колическтво в виде строки"""
+        return f"{self.__class__.__name__}" \
+               f"('{self.__name}', {self.price}, {self.quantity})"
+
+
+    def __str__(self):
+        """Возвращает имя товара"""
+        return f"{self.__name}"
+
+
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
-
         :return: Общая стоимость товара.
         """
         return self.price * self.quantity
 
+
     def apply_discount(self) -> None:
-        """
-        Применяет установленную скидку для конкретного товара.
-        """
+        """Применяет установленную скидку для конкретного товара."""
         self.price *= self.pay_rate
 
     @classmethod
     def instantiate_from_csv(cls):
-        """Класс-метод, инициализирующий экземпляры класса Item данными из файла"""
+        """Инициализирует экземпляры класса Item данными из файла"""
         cls.all = []
         with open('../src/items.csv', newline='', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
@@ -41,15 +52,18 @@ class Item:
             for row in reader:
                 cls.all.append(cls(row["name"], row["price"], row["quantity"]))
 
+
     @staticmethod
     def string_to_number(number: str):
         """Статический метод возвращающий число из строки"""
         return int(float(number))
 
+
     @property
     def name(self):
         """Возвращает имя"""
         return self.__name
+
 
     @name.setter
     def name(self, name):
