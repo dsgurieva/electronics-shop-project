@@ -24,5 +24,3 @@ def test_number_of_sim():
     assert phone.number_sim == 2
     assert phone_2.number_sim == 1
     assert phone_3.number_sim == 'ValueError: Количество физических SIM-карт должно быть целым числом больше нуля.'
-
-print(phone_3)

@@ -28,7 +28,9 @@ class Item:
         """Возвращает имя товара"""
         return f"{self.__name}"
 
+
     def __add__(self, other):
+        """Функция сложения экземпляров класса"""
         if isinstance(other, Item):
             return self.quantity + other.quantity
 
