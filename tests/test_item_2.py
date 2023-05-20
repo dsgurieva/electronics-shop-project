@@ -1,4 +1,5 @@
 from src.item import Item
+import pytest
 
 item = Item('Ноутбук', 20000, 10)
 item_2 = Item('Суперноутбук', 20000, 10)
@@ -25,4 +26,16 @@ def test_str():
     assert str(item) == 'Ноутбук'
     assert str(item_2) == 'Суперноутбук'
 
+def test_instantiate_from_csv():
 
+    with pytest.raises(FileNotFoundError):
+        try:
+            with open('../src/item.csv', newline='', encoding="utf-8") as csvfile:
+                reader = csv.DictReader(csvfile)
+        except FileNotFoundError:
+            raise FileNotFoundError('Отсутствует файл item.csv')
+
+def test_instantiate_from_csv_1():
+
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv()

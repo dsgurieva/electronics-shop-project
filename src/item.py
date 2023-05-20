@@ -1,5 +1,10 @@
 import csv
 
+class InstantiateCSVError(Exception):
+
+    def __init__(self, *args, **kwargs):
+        self.message = "Файл item.csv поврежден"
+
 
 class Item:
     """
@@ -52,11 +57,21 @@ class Item:
     def instantiate_from_csv(cls):
         """Инициализирует экземпляры класса Item данными из файла"""
         cls.all = []
-        with open('../src/items.csv', newline='', encoding="utf-8") as csvfile:
-            reader = csv.DictReader(csvfile)
-            cls.all.clear()
-            for row in reader:
-                cls.all.append(cls(row["name"], row["price"], row["quantity"]))
+
+        try:
+            with open('../src/items.csv', newline='', encoding="utf-8") as csvfile:
+                reader = csv.DictReader(csvfile)
+                cls.all.clear()
+                try:
+                    for row in reader:
+                        cls.all.append(cls(row["name"], row["price"], row["quantity"]))
+                except KeyError:
+                    raise InstantiateCSVError('Файл item.csv поврежден')
+
+        except FileNotFoundError:
+            raise FileNotFoundError('Отсутствует файл item.csv')
+
+
 
 
     @staticmethod
